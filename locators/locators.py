@@ -1,6 +1,5 @@
 from selenium.webdriver.common.by import By
 
-
 class BasePageLocators:
     ...
 
@@ -189,3 +188,6 @@ class ProductPageLocators(HeaderLocators, BasePageLocators):
         By.XPATH,
         '//div[@id="cartModal"]//button[contains(@class, "btn-success")]'
     )
+
+
+    

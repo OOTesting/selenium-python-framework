@@ -1,36 +1,155 @@
-from selenium import webdriver
-from traceback import print_stack
-from utils.util import utils
+from typing import Optional, Tuple, List
+
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
+from webdriver_manager.chrome import ChromeDriverManager
+
+from locators import BasePageLocators
 
 
-class BasePage(SeleniumDriver):
+class BasePage:
+    url = "https://www.automationexercise.com/"
+    driver = None
+    locators = BasePageLocators()
+    wait_timeout = 5
 
-    def __init__(self, driver):
-        super(BasePage, self).__init__(driver)
+    def __init__(
+        self,
+        driver: WebDriver,
+        url: Optional[str] = None,
+        open_on_init: bool = False,
+    ):
         self.driver = driver
-        self.util = util()
+        self.actions = ActionChains(driver)
 
-    def pageLocators(self, page):
-        """
-        read the locators of specific page
-        :param page: page
-        :return: list of all locators in specific page
-        """
-        locatorsPath = os.path.abspath("./locators/locators.json")
-        locatorsJsonFile = RJ.readJson(locatorsPath)
-        pageLocators = [locator for locator in locatorsJsonFile if locator['pageName'] in page]
-        return pageLocators
+        if url:
+            self.url = url
 
-    def locator(self, pageLocators, locatorName):
+        if open_on_init:
+            self.open()
+
+    def open(self):
+        self.driver.get(self.url)
+
+    def wait(self, timeout: int = None) -> WebDriverWait:
         """
-        get specific locator in specific page
-        :param pageLocators: specific page
-        :param locatorName: locator name
-        :return: locator and locator Type
+        Basic setup for Explicit Waits
+        :param timeout: max time (in seconds) to wait for condition
+        :return: WebDriverWait
         """
-        for locator in pageLocators:
-            if locatorName == locator['name']:
-                return locator['locator'], locator['locateUsing']
+        if timeout is None:
+            timeout = self.wait_timeout
+        return WebDriverWait(driver=self.driver, timeout=timeout)
+
+    def find_element(self, locator: Tuple[str, str], timeout: int = None) \
+            -> WebElement:
+        """
+        Find element by its locator
+        :param locator: (by, selector)
+        :param timeout: max time (in seconds) to wait for condition
+        :return: WebElement
+        """
+        return self.wait(timeout=timeout).until(
+            EC.presence_of_element_located(locator)
+        )
+
+    def find_elements(self, locator: Tuple[str, str], timeout: int = None) \
+            -> List[WebElement]:
+        """
+        FInd multiple elements by their locator
+        :param locator: (by, selector)
+        :param timeout: timeout: max time (in seconds) to wait for condition
+        :return: List[WebElement]
+        """
+        return self.wait(timeout=timeout).until(
+            EC.presence_of_all_elements_located(locator)
+        )
+
+    def find_alert(self, timeout: int = None):
+        """
+        Find
+        :param timeout:
+        :return:
+        """
+        return self.wait(timeout=timeout).until(
+            EC.alert_is_present()
+        )
+
+    def find_clickable_element(
+        self, locator: Tuple[str, str], timeout: int = None
+    ) -> WebElement:
+        """
+        Find clickable element by its locator
+        :param locator: (by, selector)
+        :param timeout: max time (in seconds) to wait for condition
+        :return: WebElement
+        """
+        return self.wait(timeout=timeout).until(EC.element_to_be_clickable(locator))
+
+    def find_visible_element(
+        self, locator: Tuple[str, str], timeout: int = None
+    ) -> WebElement:
+        """
+        Find visible element by its locator
+        :param locator: (by, selector)
+        :param timeout: max time (in seconds) to wait for condition
+        :return: WebElement
+        """
+        return self.wait(timeout=timeout).until(
+            EC.visibility_of_element_located(locator)
+        )
+
+    def is_alert_present(self, timeout: int = None):
+        try:
+            self.find_alert(timeout=timeout)
+        except TimeoutException:
+            return False
+        return True
+
+    def is_element_present(self, locator: Tuple[str, str], timeout: int = None) -> bool:
+        """
+        Check if element is present on a page
+        :param locator: (by, selector)
+        :param timeout: max time (in seconds) to wait for condition
+        :return: bool
+        """
+        try:
+            self.find_element(locator=locator, timeout=timeout)
+        except TimeoutException:
+            return False
+        return True
+
+    def is_not_element_present(
+        self, locator: Tuple[str, str], timeout: int = None
+    ) -> bool:
+        """
+        Check if element is not present on a page
+        :param locator: (by, selector)
+        :param timeout: max time (in seconds) to wait for condition
+        :return: bool
+        """
+        try:
+            self.find_element(locator=locator, timeout=timeout)
+        except TimeoutException:
+            return True
+        return False
+
+    def get_item_location(
+        self, locator: Tuple[str, str], timeout: int = None
+    ) -> WebElement.location:
+        """
+        Get x, y coordinates of element
+        :param locator: locator if the element
+        :param timeout: timeout of search
+        :return: dict
+        """
+        element = self.find_element(locator=locator, timeout=timeout)
+        return element.location
+    
 
     def verifyPageTitle(self, titleToVerify):
         """
@@ -43,5 +162,4 @@ class BasePage(SeleniumDriver):
             return  self.util.verifyTextContains(actualTitle, titleToVerify)
         except:
             self.log.error("Failed to get page title")
-            print_stack()
             return False
