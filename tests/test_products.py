@@ -1,5 +1,5 @@
 import allure
-from tests.tests_ui.base_case import BaseCase
+from tests.base_case import BaseCase
 
 
 @allure.suite("Smoke")

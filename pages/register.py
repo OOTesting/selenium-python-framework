@@ -6,8 +6,11 @@ from models.user import User
 
 
 class SignupPage(Header, BasePage):
-    url = "https://www.automationexercise.com/signup"
+    path = "/signup"
     locators = SignupPageLocators()
+    
+    def open_page(self):
+        self.open(self.path)
 
     def is_opened(self) -> bool:
         return self.is_element_present(self.locators.BUTTON_CREATE_ACCOUNT)

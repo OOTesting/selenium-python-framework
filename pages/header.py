@@ -1,6 +1,10 @@
 from locators import HeaderLocators
 from pages.base_page import BasePage
 
+"""
+Checks when logged in, that delete and logout button shown
+"""
+
 
 class Header(BasePage):
     locators = HeaderLocators()
@@ -21,6 +25,11 @@ class Header(BasePage):
         ).click()
 
     def click_header_button_products(self):
+        self.find_clickable_element(
+            self.locators.HEADER_BUTTON_PRODUCTS
+        ).click()
+
+    def click_header_button_cart(self):
         self.find_clickable_element(
             self.locators.HEADER_BUTTON_PRODUCTS
         ).click()

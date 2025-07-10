@@ -1,12 +1,15 @@
 import inspect
 import logging
-
+"""
+Modified custom logger, picked up from previous roles.
+"""
 
 def customLogger(logLevel=logging.DEBUG):
 
     # Gets the name of the class / method from where this method is called
     loggerName = inspect.stack()[1][3]
     logger = logging.getLogger(loggerName)
+    
     # By default, log all messages
     logger.setLevel(logging.DEBUG)
 

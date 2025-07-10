@@ -4,8 +4,11 @@ from pages.header import Header
 
 
 class ProductsPage(Header, BasePage):
-    url = "https://www.automationexercise.com/products"
+    path = "/products"
     locators = ProductsPageLocators()
+    
+    def open_page(self):
+        self.open(self.path)
 
     def is_opened(self) -> bool:
         return self.is_element_present(self.locators.PRODUCT_CARD)

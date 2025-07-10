@@ -1,4 +1,7 @@
 from dataclasses import dataclass
+"""
+Reusable dataclass to manage data
+"""
 
 
 @dataclass
@@ -13,7 +16,7 @@ class User:
     years: str = None
     newsletter: str = None
     optin: str = None
-    
+
     # Address Information
     first_name: str = None
     last_name: str = None

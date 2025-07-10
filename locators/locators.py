@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 
+
 class BasePageLocators:
     ...
 
@@ -28,6 +29,10 @@ class HeaderLocators(BasePageLocators):
     HEADER_BUTTON_CONTACT_US = (
         By.XPATH,
         '//ul[contains(@class, "navbar-nav")]//a[@href="/contact_us"]',
+    )
+    HEADER_BUTTON_VIEW_CART = (
+        By.XPATH,
+        '//ul[contains(@class, "navbar-nav")]//a[@href="/view_cart"]',
     )
 
 
@@ -76,6 +81,7 @@ class SignupPageLocators(HeaderLocators, BasePageLocators):
     SELECT_BIRTH_YEAR = (By.XPATH, '//select[@data-qa="years"]')
     CHECKBOX_NEWSLETTER = (By.XPATH, '//input[@id="newsletter"]')
     CHECKBOX_SPECIAL_OFFERS = (By.XPATH, '//input[@id="optin"]')
+
     # Address Information
     INPUT_FIRST_NAME = (By.XPATH, '//input[@data-qa="first_name"]')
     INPUT_LAST_NAME = (By.XPATH, '//input[@data-qa="last_name"]')
@@ -87,6 +93,7 @@ class SignupPageLocators(HeaderLocators, BasePageLocators):
     INPUT_CITY = (By.XPATH, '//input[@data-qa="city"]')
     INPUT_ZIPCODE = (By.XPATH, '//input[@data-qa="zipcode"]')
     INPUT_MOBILE_NUMBER = (By.XPATH, '//input[@data-qa="mobile_number"]')
+
     # Confirmation
     BUTTON_CREATE_ACCOUNT = (By.XPATH, '//button[@data-qa="create-account"]')
 
@@ -190,4 +197,20 @@ class ProductPageLocators(HeaderLocators, BasePageLocators):
     )
 
 
-    
+class CartPageLocators(BasePageLocators):
+    # Locator for the "Cart is empty!" bold text inside empty basket
+    CART_EMPTY_TEXT = (
+        By.XPATH,
+        "//section[@id='cart_items']//span[@id='empty_cart']//p[@class='text-center']/b[text()='Cart is empty!']"
+    )
+
+    # Locator for the link to the products page inside the empty basket
+    PRODUCTS_LINK = (
+        By.XPATH,
+        "//section[@id='cart_items']//span[@id='empty_cart']//p[@class='text-center']/a[@href='/products']"
+    )
+    # Locator for the text on carts page with or without items added to basket
+    CART_LABEL = (
+        By.XPATH,
+        '//section[@id=\'cart_items\']//li[@class=\'active\' and text()=\'Shopping Cart\']'
+    )

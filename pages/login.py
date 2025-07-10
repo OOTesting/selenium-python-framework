@@ -4,13 +4,16 @@ from models.user import User
 
 
 class LoginPage(Header, BasePage):
-    url = "https://www.automationexercise.com/login"
+    path = "/login"
     locators = LoginPageLocators()
+    
+    def open_page(self):
+        self.open(self.path)
 
     def is_opened(self) -> bool:
         return self.is_element_present(self.locators.BUTTON_LOGIN)
 
-    def authorize(self, email: str, password: str):
+    def login(self, email: str, password: str):
         input_login_email = self.find_element(self.locators.INPUT_LOGIN_EMAIL)
         input_login_email.clear()
         input_login_email.send_keys(email)

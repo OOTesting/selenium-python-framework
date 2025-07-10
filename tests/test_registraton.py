@@ -1,17 +1,18 @@
 import allure
 import pytest
-from tests.tests_ui.base_case import BaseCase
+from tests.base_case import BaseCase
 from utils.user_importer import import_user
 
 
 @allure.suite("Smoke")
 @allure.epic("Registration")
 @allure.feature("Registration with email and password")
+
 class TestRegistration(BaseCase):
     @allure.title("AE-1: User can create account with valid data")
     @allure.link("https://app.qase.io/case/AE-1")
     @pytest.mark.parametrize(
-        "user", import_user(file_name="tests/tests_data/AE-1.xlsx")
+        "user", import_user(file_name="tests/test_data/AE-1.xlsx")
     )
     def test_ae_1_valid_user_can_be_created(self, user_manager, user):
         # Arrange

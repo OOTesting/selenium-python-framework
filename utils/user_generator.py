@@ -1,5 +1,5 @@
 import pytest
-from app.api.api_client import APIClient
+from api.generate_client import generateapiclient
 from utils.user_builder import UserBuilder
 
 
@@ -8,7 +8,7 @@ class UserGenerator:
 
     @pytest.fixture()
     def random_valid_user(self):
-        api_client = APIClient()
+        api_client = generateapiclient()
         user = (
             self.builder.reset_user()
             .set_name()

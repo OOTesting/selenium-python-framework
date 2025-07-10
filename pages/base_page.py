@@ -1,4 +1,7 @@
 from typing import Optional, Tuple, List
+"""
+Improves readabilty and does checking in VScode
+"""
 
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
@@ -6,13 +9,13 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from webdriver_manager.chrome import ChromeDriverManager
+
 
 from locators import BasePageLocators
 
 
 class BasePage:
-    url = "https://www.automationexercise.com/"
+    baseurl = "https://www.automationexercise.com"
     driver = None
     locators = BasePageLocators()
     wait_timeout = 5
@@ -28,17 +31,21 @@ class BasePage:
 
         if url:
             self.url = url
+        else:
+            self.url = self.baseurl
 
         if open_on_init:
             self.open()
 
-    def open(self):
+    def open(self, path: str = ""):
+        url = self.baseurl + path
         self.driver.get(self.url)
 
     def wait(self, timeout: int = None) -> WebDriverWait:
         """
-        Basic setup for Explicit Waits
-        :param timeout: max time (in seconds) to wait for condition
+        Creates and returns Explicit Waits
+
+        :param timeout: Optional timeouts
         :return: WebDriverWait
         """
         if timeout is None:
@@ -60,7 +67,8 @@ class BasePage:
     def find_elements(self, locator: Tuple[str, str], timeout: int = None) \
             -> List[WebElement]:
         """
-        FInd multiple elements by their locator
+        Find multiple elements by their locator
+
         :param locator: (by, selector)
         :param timeout: timeout: max time (in seconds) to wait for condition
         :return: List[WebElement]
@@ -71,7 +79,8 @@ class BasePage:
 
     def find_alert(self, timeout: int = None):
         """
-        Find
+        Waits for an aler to be present
+
         :param timeout:
         :return:
         """
@@ -84,6 +93,7 @@ class BasePage:
     ) -> WebElement:
         """
         Find clickable element by its locator
+
         :param locator: (by, selector)
         :param timeout: max time (in seconds) to wait for condition
         :return: WebElement
@@ -95,6 +105,7 @@ class BasePage:
     ) -> WebElement:
         """
         Find visible element by its locator
+
         :param locator: (by, selector)
         :param timeout: max time (in seconds) to wait for condition
         :return: WebElement
@@ -112,7 +123,8 @@ class BasePage:
 
     def is_element_present(self, locator: Tuple[str, str], timeout: int = None) -> bool:
         """
-        Check if element is present on a page
+        Check if element is present
+
         :param locator: (by, selector)
         :param timeout: max time (in seconds) to wait for condition
         :return: bool
@@ -127,7 +139,8 @@ class BasePage:
         self, locator: Tuple[str, str], timeout: int = None
     ) -> bool:
         """
-        Check if element is not present on a page
+        Check if element is not present
+
         :param locator: (by, selector)
         :param timeout: max time (in seconds) to wait for condition
         :return: bool
@@ -143,23 +156,10 @@ class BasePage:
     ) -> WebElement.location:
         """
         Get x, y coordinates of element
+
         :param locator: locator if the element
         :param timeout: timeout of search
         :return: dict
         """
         element = self.find_element(locator=locator, timeout=timeout)
         return element.location
-    
-
-    def verifyPageTitle(self, titleToVerify):
-        """
-        Verify the page Title
-
-        :param titleToVerify: Title on the page that needs to be verified
-        """
-        try:
-            actualTitle = self.getTitle()
-            return  self.util.verifyTextContains(actualTitle, titleToVerify)
-        except:
-            self.log.error("Failed to get page title")
-            return False

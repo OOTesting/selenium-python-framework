@@ -2,6 +2,7 @@ from locators import FooterLocators
 from pages.base_page import BasePage
 
 
+
 class Footer(BasePage):
     locators = FooterLocators()
 
