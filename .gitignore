@@ -1,2 +1,22 @@
-.vscode/
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# macOS system files
 .DS_Store
+
+# VSCode settings
+.vscode/
+
+# Logs
+*.log
+
+# Environments
+.env
+.venv/
+env/
+venv/
+
+# Pytest
+.pytest_cache/
+.cache/
