@@ -4,10 +4,9 @@ from pages import (
     LoginPage,
     SignupPage,
     AccountCreatedPage,
-    AccountDeletedPage,
     ContactUsPage,
-    ProductsPage,
     ProductPage,
+    ProductsPage,
 )
 
 
@@ -18,7 +17,6 @@ class BaseCase:
     login_page = None
     signup_page = None
     account_created_page = None
-    account_deleted_page = None
     contact_us_page = None
     products_page = None
     product_page = None
@@ -31,7 +29,6 @@ class BaseCase:
         self.login_page = LoginPage(driver=self.driver)
         self.signup_page = SignupPage(driver=self.driver)
         self.account_created_page = AccountCreatedPage(driver=self.driver)
-        self.account_deleted_page = AccountDeletedPage(driver=self.driver)
         self.contact_us_page = ContactUsPage(driver=self.driver)
         self.products_page = ProductsPage(driver=self.driver)
         self.product_page = ProductPage(driver=self.driver)

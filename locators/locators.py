@@ -58,6 +58,18 @@ class HomePageLocators(HeaderLocators, BasePageLocators):
         '//div[@id="slider-carousel"]'
     )
 
+    SLIDER_CAROUSEL = (By.CSS_SELECTOR, 'a.control-carousel.right.hidden-xs[data-slide="next"]')
+
+    # Subcategory menu listing
+    WOMEN_CATEGORY = (By.CSS_SELECTOR, 'a[href="#Women"]')
+    MEN_CATEGORY = (By.CSS_SELECTOR, 'a[href="#Men"]')
+    KIDS_CATEGORY = (By.CSS_SELECTOR, 'a[href="#Kids"]')
+
+    # Subcategory container after expansion
+    WOMEN_SUBCATEGORIES = (By.CSS_SELECTOR, '#Women.collapse.in ul li a')
+    MEN_SUBCATEGORIES = (By.CSS_SELECTOR, '#Men.collapse.in ul li a')
+    KIDS_SUBCATEGORIES = (By.CSS_SELECTOR, '#Kids.collapse.in ul li a')
+
 
 class LoginPageLocators(HeaderLocators, BasePageLocators):
     INPUT_LOGIN_EMAIL = (By.XPATH, '//input[@data-qa="login-email"]')

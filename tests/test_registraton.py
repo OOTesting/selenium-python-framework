@@ -2,6 +2,7 @@ import allure
 import pytest
 from tests.base_case import BaseCase
 from utils.user_importer import import_user
+from locators.locators import BasePageLocators
 
 
 @allure.suite("Smoke")

@@ -4,7 +4,7 @@ from pages.header import Header
 
 
 class ContactUsPage(Header, BasePage):
-    url = "/contact_us"
+    path = "/contact_us"
     locators = ContactUsPageLocators()
     
     def open_page(self):
