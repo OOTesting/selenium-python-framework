@@ -10,8 +10,7 @@ from locators.locators import BasePageLocators
 @allure.feature("Registration with email and password")
 
 class TestRegistration(BaseCase):
-    @allure.title("AE-1: User can create account with valid data")
-    @allure.link("https://app.qase.io/case/AE-1")
+    @allure.title("Create a registered user")
     @pytest.mark.parametrize(
         "user", import_user(file_name="tests/test_data/AE-1.xlsx")
     )
@@ -28,8 +27,7 @@ class TestRegistration(BaseCase):
         # Assert
         assert self.account_deleted_page.is_account_deleted()
 
-    @allure.title("AE-5: Register User with existing email")
-    @allure.link("https://app.qase.io/case/AE-5")
+    @allure.title("Register User with existing email")
     @pytest.mark.parametrize(
         "user", import_user(file_name="tests/tests_data/AE-5.xlsx")
     )
