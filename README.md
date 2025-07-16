@@ -8,7 +8,6 @@ This is ongoing project and additional tests will be added.
 ## Testing Approach and Design Patterns
 - Page Object Model (POM) for UI Tests
 - Request-Response Model for API Tests - In progress
-
 ---
 
 #### 1. Local Machine:
@@ -25,7 +24,7 @@ This is ongoing project and additional tests will be added.
 
 1. `--headless` - run tests without loading the browser's UI.
 2. `--use_local_driver` - use local driver without downloading it by `webdriver-manager` if added.
-3. `--driver-path` - path to the driver (`external_files/drivers/chromedriver.exe` by default).
+
 
 
 
